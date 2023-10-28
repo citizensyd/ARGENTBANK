@@ -11,6 +11,7 @@ import Footer from "../../components/Footer";
 
 const Accueil = () => {
 
+
   const chat = {
     image: chatImage,
     alt: "Chat Icon",
