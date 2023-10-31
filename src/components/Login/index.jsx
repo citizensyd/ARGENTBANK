@@ -4,6 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginToken } from '../../features/Api/api';
 import Cookies from 'js-cookie';
 
+/**
+ * Login Component - Provides functionality to authenticate users.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ *
+ * @returns {JSX.Element} A JSX element that represents the login form.
+ */
 const Login = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -12,21 +20,39 @@ const Login = (props) => {
     const { isAuthenticated } = useSelector(state => state.auth);
     const [error, setError] = useState(null);
 
+    /**
+     * Redirects user to profile page if already authenticated.
+     */
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/profile')
         }
     }, [isAuthenticated, navigate]);
 
+    /**
+     * Handles the change event on the username input field.
+     *
+     * @param {Event} e - The input event.
+     */
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
         setError(null);
     };
 
+    /**
+     * Handles the change event on the password input field.
+     *
+     * @param {Event} e - The input event.
+     */
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
 
+    /**
+     * Handles form submission and performs login.
+     *
+     * @param {Event} e - The form submit event.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

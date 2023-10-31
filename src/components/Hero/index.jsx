@@ -1,4 +1,10 @@
-
+/**
+ * Hero Component - Displays the hero section of a page with promotional content.
+ *
+ * @component
+ * 
+ * @returns {JSX.Element} A JSX element that represents the hero section.
+ */
 const Hero = () => {
     return (
         <div className="hero">

@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: Bank Argent API Documentation
+  description: Contains all available API endpoints for Transactions
+  version: "2.0.0"
+servers:
+  - url: http://localhost:3001/api/v2
+    description: Development server
+
+paths:
+  /account/{id-account}/transactions:
+    get:
+      tags:
+        - Transactions Module
+      summary: Get Transactions for Current Month
+      description: Returns a list of all transactions for the current month, grouped by account
+      parameters:
+        - in: path
+          name: id-account
+          schema:
+            type: string
+          required: true
+          description: The ID of the account
+        - in: header
+          schema:
+            type: string
+          name: Authorization
+          description: Bearer JWT token
+          required: true
+      responses:
+        "200":
+          description: Transactions retrieved successfully
+          content:
+            application/json: {}
+        "400":
+          description: Invalid request
+          content:
+            application/json: {}
+        "500":
+          description: Internal server error
+          content:
+            application/json: {}
+
+    post:
+      tags:
+        - Transactions Module
+      summary: Add Transaction
+      description: Add a new transaction
+      parameters:
+        - in: path
+          name: id-account
+          schema:
+            type: string
+          required: true
+          description: The ID of the account
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer JWT token
+      requestBody:
+          description: Transaction Payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+      responses:
+        "201":
+          description: Transaction created successfully
+          content:
+            application/json: {}
+        "400":
+          description: Invalid fields
+          content:
+            application/json: {}
+        "500":
+          description: Internal server error
+          content:
+            application/json: {}
+
+  /account/{id-account}/transactions/{id-transaction}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Get Transaction Details
+      description: Returns detailed information of a specific transaction
+      parameters:
+        - in: path
+          name: id-account
+          schema:
+            type: string
+          required: true
+          description: The ID of the account
+        - in: path
+          name: id-transaction
+          schema:
+            type: string
+          required: true
+          description: Transaction ID
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer JWT token
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          content:
+            application/json: {}
+        "404":
+          description: Transaction not found
+          content:
+            application/json: {}
+        "500":
+          description: Internal server error
+          content:
+            application/json: {}
+
+    patch:
+      tags:
+        - Transactions Module
+      summary: Update Transaction
+      description: Update an existing transaction
+      parameters:
+        - in: path
+          name: id-account
+          schema:
+            type: string
+          required: true
+          description: The ID of the account
+        - in: path
+          name: id-transaction
+          schema:
+            type: string
+          required: true
+          description: Transaction ID
+      requestBody:
+          description: Transaction Payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionUpdate"
+      responses:
+        "200":
+          description: Transaction updated successfully
+          content:
+            application/json: {}
+        "400":
+          description: Invalid fields
+          content:
+            application/json: {}
+        "404":
+          description: Transaction not found
+          content:
+            application/json: {}
+        "500":
+          description: Internal server error
+          content:
+            application/json: {}
+
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID related to the transaction
+        amount:
+          type: number
+          description: Transaction amount
+        description:
+          type: string
+          description: Transaction description
+        date:
+          type: string
+          format: date
+          description: Transaction date
+        transactionType:
+          type: string
+          description: Type of transaction (debit, credit)
+        category:
+          type: string
+          description: Category of the transaction (food, rent)
+        notes:
+          type: string
+          description: Additional notes for the transaction
+    TransactionUpdate:
+        type: object
+        anyOf:
+          - required: [description]
+          - required: [category]
+        properties:
+          description:
+            type: string
+            description: Updated description of the transaction
+          category:
+            type: string
+            description: Updated category of the transaction

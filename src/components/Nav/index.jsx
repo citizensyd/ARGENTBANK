@@ -4,19 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/login/auth";
 import Cookies from 'js-cookie';
 
-
+/**
+ * Nav Component - Provides the main navigation for the application.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ *
+ * @returns {JSX.Element} A JSX element that represents the main navigation.
+ */
 const Nav = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const { isAuthenticated } = useSelector(state => state.auth);
     const { firstName, lastName } = useSelector(state => state.user);
 
+    /**
+     * Handles logout action by removing token and updating state.
+     */
     const handleLogout = () => {
         Cookies.remove('token');
         dispatch(logout());
         navigate('/login');
-    }
+    };
 
     return (
         <nav className="main-nav">

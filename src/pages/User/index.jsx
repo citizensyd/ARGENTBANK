@@ -1,4 +1,4 @@
-import Nav from "../../components/Nav/index"
+import Nav from "../../components/Nav/index";
 import Main from "../../components/Main";
 import Header from "../../components/Header";
 import Account from "../../components/Account";
@@ -10,12 +10,22 @@ import { fetchUser } from "../../features/Api/api";
 import { changeFirstname, changeLastname } from "../../features/user/userSlice";
 import Cookies from 'js-cookie';
 
+/**
+ * User Component - Represents the User view in the application.
+ *
+ * @returns {JSX.Element} Rendered User component.
+ */
 const User = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    // Pulling firstName and lastName from Redux store
     const { firstName, lastName } = useSelector(state => state.user);
 
+    /**
+     * UseEffect to fetch user data and populate Redux store.
+     */
     useEffect(() => {
         const fetchUserApi = async () => {
             let token = Cookies.get('token');
@@ -25,7 +35,7 @@ const User = () => {
                 dispatch(changeLastname(response.payload.body.lastName));
                 return response;
             } catch (error) {
-                console.error('Une erreur est survenue:', error);
+                console.error('An error occurred:', error);
                 navigate('/login');
             }
             token = null
@@ -34,25 +44,11 @@ const User = () => {
         fetchUserApi();
     }, [dispatch, navigate]);
 
-    const transactions = [{
-        type: "Checking",
-        id: 8349,
-        amount: "2,082.79",
-        statut: "Available",
-    },
-    {
-        type: "Saving",
-        id: 6712,
-        amount: "10,928.42",
-        statut: "Available",
-    },
-    {
-        type: "Credit Card",
-        id: 8347,
-        amount: "183.30",
-        statut: "Current",
-    }
-    ]
+    const transactions = [
+        { type: "Checking", id: 8349, amount: "2,082.79", statut: "Available" },
+        { type: "Saving", id: 6712, amount: "10,928.42", statut: "Available" },
+        { type: "Credit Card", id: 8347, amount: "183.30", statut: "Current" }
+    ];
 
     return (
         <>
