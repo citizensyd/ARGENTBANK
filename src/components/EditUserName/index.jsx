@@ -3,6 +3,7 @@ import { toggleEdit, changeFirstname, changeLastname } from "../../features/user
 import { changeUser } from "../../features/Api/api";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { StyledEdit } from "./index.styles"
 
 /**
  * EditUserName - Component for editing user's first and last name
@@ -62,12 +63,16 @@ const EditUserName = () => {
     }
 
     return (
-        <div className="">
-            <input type="text" onChange={handleFirstnameChange} placeholder={firstName} />
-            <input type="text" onChange={handleLastnameChange} placeholder={lastName} />
-            <button onClick={handleChangeFirstNameLastName}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
-        </div>
+        <StyledEdit>
+            <div>
+                <input type="text" onChange={handleFirstnameChange} placeholder={firstName} />
+                <button onClick={handleChangeFirstNameLastName}>Save</button>
+            </div>
+            <div>
+                <input type="text" onChange={handleLastnameChange} placeholder={lastName} />
+                <button onClick={handleCancel}>Cancel</button>
+            </div>
+        </StyledEdit>
     );
 };
 

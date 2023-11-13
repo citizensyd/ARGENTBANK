@@ -25,7 +25,7 @@ const Header = (props) => {
 
     return (
         <div className="header">
-            <h1>Welcome back<br />{firstName} {lastName}!</h1>
+            {showEdit ? <h1>Welcome back</h1> : <h1>Welcome back<br />{firstName} {lastName}!</h1>}
             {showEdit ? <EditUserName /> : <button className="edit-button" onClick={handleEdit}>Edit Name</button>}
         </div>
     );

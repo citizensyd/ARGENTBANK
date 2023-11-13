@@ -3,6 +3,8 @@ import logo from "../../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/login/auth";
 import Cookies from 'js-cookie';
+import { toggleEdit } from "../../features/user/userSlice";
+
 
 /**
  * Nav Component - Provides the main navigation for the application.
@@ -23,6 +25,7 @@ const Nav = (props) => {
      */
     const handleLogout = () => {
         Cookies.remove('token');
+        dispatch(toggleEdit(false));
         dispatch(logout());
         navigate('/login');
     };
