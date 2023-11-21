@@ -12,7 +12,7 @@ paths:
     get:
       tags:
         - Transactions Module
-      summary: Get Transactions for Current Month
+      summary: Get All transactions or selected by period
       description: Returns a list of all transactions for the current month, grouped by account
       parameters:
         - in: path
@@ -27,6 +27,14 @@ paths:
           name: Authorization
           description: Bearer JWT token
           required: true
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+          required: false
+          description: The date for which you wish to retrieve transactions (in "YYYY-MM" format).
+
       responses:
         "200":
           description: Transactions retrieved successfully
